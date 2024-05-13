@@ -16,6 +16,7 @@ class _MyWidgetState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('P L A Y L I S T'),
         centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       drawer: MyDrawer(),
     );

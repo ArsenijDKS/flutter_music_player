@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_player/pages/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -29,7 +30,7 @@ class MyDrawer extends StatelessWidget {
                 Icons.home,
                 color: Theme.of(context).colorScheme.inversePrimary,
               ),
-              onTap: () {},
+              onTap: () => Navigator.pop(context),
             ),
           ),
 
@@ -42,7 +43,18 @@ class MyDrawer extends StatelessWidget {
                 Icons.settings,
                 color: Theme.of(context).colorScheme.inversePrimary,
               ),
-              onTap: () {},
+              onTap: () {
+                // Pop drawer
+                Navigator.pop(context);
+
+                // Navigate to settings page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingsPage(),
+                  ),
+                );
+              },
             ),
           )
         ],
