@@ -9,8 +9,15 @@ class SongPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlaylistProvider>(
-      builder: (context, value, child) => Scaffold(
+    return Consumer<PlaylistProvider>(builder: (context, value, child) {
+      // get playlist
+      final playlist = value.playlist;
+
+      // get song
+      final currentSong = playlist[value.currentSongIndex ?? 0];
+
+      // Return scaffold UI
+      return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
           child: Padding(
@@ -20,6 +27,7 @@ class SongPage extends StatelessWidget {
               bottom: 25.0,
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // App bar
                 Row(
@@ -27,12 +35,12 @@ class SongPage extends StatelessWidget {
                   children: [
                     // Back button
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.pop(context),
                       icon: const Icon(Icons.arrow_back),
                     ),
 
                     // Title
-                    Text("P L A Y L I S T"),
+                    const Text("P L A Y L I S T"),
 
                     // Menu button
                     IconButton(
@@ -49,12 +57,11 @@ class SongPage extends StatelessWidget {
                       // Image
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: Image.asset(
-                            "assets/images/Goody Grace - Auburn.jpg"),
+                        child: Image.asset(currentSong.albumArtImagePath),
                       ),
 
                       // Song and Artist name, icon
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.all(15.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,17 +71,17 @@ class SongPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Auburn",
-                                  style: TextStyle(
+                                  currentSong.songName,
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                Text("Goody Grace"),
+                                Text(currentSong.artistName),
                               ],
                             ),
 
                             // Heart icon
-                            Icon(
+                            const Icon(
                               Icons.favorite,
                               color: Colors.red,
                             )
@@ -89,7 +96,7 @@ class SongPage extends StatelessWidget {
 
                 // Song duration progress
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Column(
                     children: [
                       const Row(
@@ -108,23 +115,76 @@ class SongPage extends StatelessWidget {
                           Text("0:00"),
                         ],
                       ),
-                      Slider(
-                        min: 0,
-                        max: 100,
-                        value: 50,
-                        activeColor: Colors.green,
-                        onChanged: (value) {},
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          thumbShape: const RoundSliderThumbShape(
+                            enabledThumbRadius: 0,
+                          ),
+                        ),
+                        child: Slider(
+                          min: 0,
+                          max: 100,
+                          value: 50,
+                          activeColor: Colors.green,
+                          onChanged: (value) {},
+                        ),
                       ),
                     ],
                   ),
-                )
+                ),
+
+                const SizedBox(
+                  height: 10,
+                ),
 
                 // Playback controls
+                Row(
+                  children: [
+                    // skip pre
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: const NeuBox(
+                          child: Icon(Icons.skip_previous),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(
+                      width: 20,
+                    ),
+
+                    // play pause
+                    Expanded(
+                      flex: 2,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: const NeuBox(
+                          child: Icon(Icons.play_arrow),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(
+                      width: 20,
+                    ),
+
+                    // skip for
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: const NeuBox(
+                          child: Icon(Icons.skip_next),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
