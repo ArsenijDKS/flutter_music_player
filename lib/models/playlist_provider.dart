@@ -88,10 +88,10 @@ class PlaylistProvider extends ChangeNotifier {
     if (_currentSongIndex != null) {
       if (_currentSongIndex! < _playlist.length - 1) {
         // Go to the next song if it's not the last song
-        _currentSongIndex = _currentSongIndex! + 1;
+        currentSongIndex = _currentSongIndex! + 1;
       } else {
         // if it's the last song, loop back to the first song
-        _currentSongIndex = 0;
+        currentSongIndex = 0;
       }
     }
   }
@@ -100,6 +100,7 @@ class PlaylistProvider extends ChangeNotifier {
   void playPreviousSong() {
     // if more than 2 seconds have paused, restart the current song
     if (_currentdDuration.inSeconds > 2) {
+      seek(Duration.zero);
     } // if it's within first 2 seconds of the song, go to previous song
     else if (_currentSongIndex! > 0) {
       currentSongIndex = _currentSongIndex! - 1;
